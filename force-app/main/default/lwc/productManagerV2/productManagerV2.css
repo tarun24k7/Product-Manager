@@ -1,0 +1,150 @@
+.product-grid {
+    @media only screen and (min-width: 1025px) {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+
+    }
+    gap: 1rem;
+    padding: 1rem;
+    @media only screen and (max-width: 1024px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+               }
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid #d8dde6;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    /* @media only screen and (max-width: 1024px) {
+        width: fit-content;                 } */
+}
+
+.product-card lightning-card {
+    flex-grow: 1;
+}
+
+.product-card .slds-p-around_medium {
+    font-size: 0.875rem;
+    color: #54698d;
+}
+.section1Box{
+    display: flex;
+    justify-content:space-evenly;
+    @media only screen and (max-width: 1024px) {
+justify-content: center; 
+         
+       }
+
+
+}
+
+.familyDiv{
+    display: flex;
+    justify-content: center;
+    @media only screen and (max-width: 1024px) {
+       width: 100%;
+
+        
+      }
+}
+
+.familyButton{
+    width: auto;
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap to the next line */
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+
+    @media only screen and (max-width: 1024px) {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 60%;
+        
+      }
+
+}
+
+.familyLgtButton{
+    width:200px; /* Set a fixed width for the buttons */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Show ellipsis (...) if the text overflows */
+    @media only screen and (max-width: 1024px) {
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    }
+}
+.familyLgtButton.slds-button_brand {
+    background-color: #1589FF; /* Customize the color */
+    color: white;
+}
+
+.addButtonDiv{
+    display: flex;
+    justify-content: center;
+    @media only screen and (max-width: 1024px) {
+
+        width: 60%;
+        
+        }
+}
+.addButton{
+    width: fit-content;
+    @media only screen and (max-width: 1024px) {
+
+        width: 100%;
+        
+        }}
+/* button{
+    width: 100%;
+    
+} */
+ .selectCardDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+ }
+.selectCard{
+    width: 30%;
+    @media only screen and (max-width: 1024px) {
+
+        width: 100%;
+        
+        }
+}
+.productSelectButton{
+    display: flex;
+    
+    justify-content: space-evenly;
+}
+.backIconDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.backIcon {
+    transition: transform 0.2s ease-in-out; /* Smooth transition for scaling */
+}
+
+.backIcon:hover {
+    transform: scale(1.2); /* Scale the icon to 1.5 times its size */
+    cursor: pointer; /* Change the cursor to a hand */
+}
+.backIcon:active {
+    transform: scale(1); /* Slightly reduce the scale on click to create a "press" effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow effect on click */
+}
+.editButtonsDiv{
+    display: flex;
+    justify-content: space-evenly;
+}

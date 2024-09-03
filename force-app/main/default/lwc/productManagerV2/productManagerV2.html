@@ -1,0 +1,126 @@
+
+<template>
+    <lightning-card title="Product Categories" icon-name="standard:product">
+        <div class="section1Box slds-grid slds-wrap slds-grid_align-space">
+            <div class="slds-col slds-size_12-of-12 slds-medium-size_10-of-12 slds-large-size_10-of-12 familyDiv">
+                <template if:true={showFamily}>
+                    <div class="familyButton">
+                        <template for:each={productFamilies} for:item="family">
+                            <button
+                                key={family}
+                                data-family={family}
+                                onclick={handleCategoryClick}
+                                 class="slds-m-bottom_small slds-button slds-button_neutral familyLgtButton
+                           {selectedCategory === MERCHANDISE ? 'slds-button_brand' : ''}"
+                            >{family}</button>
+                        </template>
+                    </div>
+                </template>
+                <template if:false={productFamilies}>
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </template>
+            </div>
+            <div class="slds-col slds-size_12-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12 addButtonDiv">
+                <button onclick={handleNewProductClick} class="slds-button slds-button_success addButton">Add New Product</button>
+            </div>
+        </div>
+    </lightning-card>
+
+    <template if:true={showNewProductForm}>
+        <lightning-card title="Add New Product" icon-name="utility:add">
+            <div class="slds-m-around_medium">
+                <lightning-input label="Name" name="Name" value={newProduct.Name} onchange={handleNewProductChange}></lightning-input>
+                <lightning-input label="Description" name="Description" value={newProduct.Description} onchange={handleNewProductChange}></lightning-input>
+                <lightning-combobox
+                    name="Family"
+                    label="Family"
+                    value={newProduct.Family}
+                    placeholder="Select a Family"
+                    options={familyOptions}
+                    onchange={handleNewProductChange}
+                ></lightning-combobox>
+                <lightning-input label="Price" name="Price__c" type="number" value={newProduct.Price__c} onchange={handleNewProductChange}></lightning-input>
+                <lightning-button label="Save" onclick={handleSaveNewProductClick} class="slds-m-top_medium"></lightning-button>
+                <lightning-button label="Cancel" onclick={handleCancelNewProductClick} class="slds-m-top_medium"></lightning-button>
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:true={products}>
+        <lightning-card title={selectedCategory} icon-name="standard:product" style="margin-top: 10px;" id="productsSection">
+            <div class="product-grid slds-grid">
+                <template for:each={products} for:item="product">
+                    <div key={product.Id} class="product-card slds-col slds-size_12-of-12" onclick={handleProductClick} data-id={product.Id}>
+                        <lightning-card title={product.Name} icon-name="standard:product_item" style="width: 100%;">
+                            <p class="slds-p-around_medium">{product.Description}</p>
+                        </lightning-card>
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:true={selectedProduct}>
+        <lightning-card title="Selected Product" icon-name="standard:product">
+
+        <div class="selectCardDiv">
+            <lightning-card title={selectedProduct.Name} icon-name="standard:product_item" class="product-card selectCard">
+                <div class="slds-p-horizontal_small slds-p-vertical_medium">
+                    <p><strong>Family:</strong> {selectedProduct.Family}</p>
+                    <p><strong>Description:</strong> {selectedProduct.Description}</p>
+                    <p><strong>Price:</strong> {selectedProduct.Price__c} <strong>CAD</strong></p>
+                    <div class="productSelectButton">
+                        <lightning-button label="Edit Product" onclick={handleEditClick} class="slds-m-top_medium"></lightning-button>
+                        <lightning-button label="Delete Product" onclick={handleDeleteClick} class="slds-m-top_medium" variant="destructive"></lightning-button>
+                    </div>
+                </div>
+
+                <template if:true={isEditing}>
+                    <div class="slds-m-around_medium">
+                        <lightning-input label="Name" name="Name" value={selectedProduct.Name} onchange={handleEditChanges}></lightning-input>
+                        <lightning-input label="Description" name="Description" value={selectedProduct.Description} onchange={handleEditChanges}></lightning-input>
+                        <lightning-combobox
+                            name="Family"
+                            label="Family"
+                            value={selectedProduct.Family}
+                            placeholder="Select a Family"
+                            options={familyOptions}
+                            onchange={handleEditChanges}
+                        ></lightning-combobox>
+                        <lightning-input label="Price" name="Price__c" type="number" value={selectedProduct.Price__c} onchange={handleEditChanges}></lightning-input>
+                        <div class="editButtonsDiv">
+                            <lightning-button label="Save" onclick={handleSaveClick} class="slds-m-top_medium"></lightning-button>
+                            <lightning-button label="Cancel" onclick={handleCancelClick} class="slds-m-top_medium"></lightning-button>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={showDeleteModal}>
+                    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCancelDelete}>
+                                    <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 class="slds-text-heading_medium">Confirm Deletion</h2>
+                            </header>
+            
+                            <div class="slds-modal__content slds-p-around_medium">
+                                <p>Are you sure you want to delete this product?</p>
+                            </div>
+            
+                            <footer class="slds-modal__footer">
+                                <lightning-button label="Cancel" onclick={handleCancelDelete}></lightning-button>
+                                <lightning-button label="Delete" variant="destructive" onclick={handleConfirmDelete}></lightning-button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </template>
+                <div class="backIconDiv">
+                    <lightning-icon icon-name="action:back" onclick={handleBackClick} class="backIcon"></lightning-icon>
+                </div>
+            </lightning-card>
+        </div></lightning-card>
+    </template>
+</template>
